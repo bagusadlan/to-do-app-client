@@ -5,18 +5,17 @@ import { toast } from 'react-toastify'
 import { useUserContext } from '../contexts/UserContext'
 import { Loader } from '../components'
 
-function RegisterForm() {
+function TodoPage() {
   const [ready, setReady] = useState(true)
   const [redirect, setRedirect] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [loginForm, setLoginForm] = useState({
-    username: '',
     email: '',
     password: ''
   })
 
   const [errors, setErrors] = useState('')
-  const { user, setUser, setUserId } = useUserContext()
+  const { setUser } = useUserContext()
 
   async function handleLoginSubmit(e) {
     e.preventDefault()
@@ -26,7 +25,6 @@ function RegisterForm() {
       const { data } = await axios.post('/api/login', loginForm)
 
       setUser(data?.data)
-      setUserId(data.data?.id)
       setRedirect(true)
       toast.success('Login berhasil!')
     } catch (error) {
@@ -53,26 +51,14 @@ function RegisterForm() {
   let isSubmitDisabled = !(loginForm.email && loginForm.password)
 
   if (redirect) {
-    if (user?.role === 'peserta') {
-      return <Navigate to={'/training'} />
-    } else {
-      return <Navigate to={'/admin/dashboard'} />
-    }
+    return <Navigate to={'/to-do'} />
   }
 
   return ready ? (
-    <div className="grow flex items-center justify-around">
+    <div className="grow flex pt-16 justify-around">
       <div className="mb-16">
-        <div className="text-4xl mb-4 text-center">Register</div>
+        <div className="text-4xl mb-4 text-center">To Do</div>
         <form className="max-w-md mx-auto" onSubmit={handleLoginSubmit}>
-          <input
-            type="text"
-            placeholder="Username"
-            className="mb-2"
-            name="username"
-            value={loginForm.username}
-            onChange={handleInputChange}
-          />
           <input
             type="email"
             placeholder="your@email.com"
@@ -140,9 +126,9 @@ function RegisterForm() {
             Login
           </button>
           <div className="text-center py-2 text-gray-500">
-            {'Already a member? '}
-            <Link to={'/login'} className="underline text-black">
-              Login
+            {"Don't have an account yet? "}
+            <Link to={'/register'} className="underline text-black">
+              Register now
             </Link>
           </div>
         </form>
@@ -154,4 +140,4 @@ function RegisterForm() {
   )
 }
 
-export default RegisterForm
+export default TodoPage

@@ -1,23 +1,25 @@
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 
 import Layout from './Layout'
 
-import {
-  RegisterPage,
-  LoginPage
-} from './pages'
+import { RegisterPage, LoginPage, TodoPage } from './pages'
 
 function App() {
-  return <>
-    <Routes>
+  return (
+    <>
+      <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/to-do" element={<TodoPage />} />
         </Route>
       </Routes>
-  </>
+      <ToastContainer />
+    </>
+  )
 }
 
 export default App
