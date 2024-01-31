@@ -7,7 +7,7 @@ import Layout from './Layout'
 
 import { RegisterPage, LoginPage, TodoPage } from './pages'
 
-axios.defaults.baseURL = 'https://to-do-app-server-rose.vercel.app/'
+axios.defaults.baseURL = 'https://to-do-app-server-rose.vercel.app'
 axios.defaults.withCredentials = true
 
 function App() {
