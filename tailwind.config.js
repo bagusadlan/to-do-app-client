@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         primary: '#0dcaf0',
-        disabled: '#6ee0f7'
+        disabled: '#c4dbf7'
       }
     },
   },
