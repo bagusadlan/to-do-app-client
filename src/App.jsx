@@ -1,10 +1,14 @@
 import './App.css'
+import axios from 'axios'
 import { Route, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
 import Layout from './Layout'
 
 import { RegisterPage, LoginPage, TodoPage } from './pages'
+
+axios.defaults.baseURL = 'http://localhost:8082'
+axios.defaults.withCredentials = true
 
 function App() {
   return (

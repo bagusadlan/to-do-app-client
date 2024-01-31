@@ -41,8 +41,8 @@ function TaskForm({ onAdd }) {
             onChange={handleInputChange}
           />
           <button
-            className={`bg-primary w-full py-2 px-4 rounded-2xl text-white${
-              isSubmitDisabled ? ' bg-disabled' : ' bg-primary'
+            className={`w-full py-2 px-4 rounded-md text-white${
+              isSubmitDisabled ? ' bg-disabled' : ' bg-blue-300'
             }`}
             disabled={isSubmitDisabled}
           >

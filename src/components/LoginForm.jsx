@@ -22,7 +22,7 @@ function LoginForm() {
     try {
       isSubmitDisabled = true
       setReady(false)
-      const { data } = await axios.post('/api/login', loginForm)
+      const { data } = await axios.post('/login', loginForm)
 
       setUser(data?.data)
       setRedirect(true)
@@ -119,7 +119,7 @@ function LoginForm() {
             </div>
           </div>
           <button
-            className={`bg-primary w-full py-2 px-4 rounded-2xl text-white${
+            className={`bg-primary w-full py-2 px-4 rounded-md text-white${
               isSubmitDisabled ? ' bg-disabled' : ' bg-primary'
             }`}
           >

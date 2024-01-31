@@ -9,29 +9,28 @@ function RegisterForm() {
   const [ready, setReady] = useState(true)
   const [redirect, setRedirect] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-  const [loginForm, setLoginForm] = useState({
+  const [registerForm, setRegisterForm] = useState({
     username: '',
     email: '',
     password: ''
   })
 
   const [errors, setErrors] = useState('')
-  const { user, setUser, setUserId } = useUserContext()
+  const { setUser } = useUserContext()
 
-  async function handleLoginSubmit(e) {
+  async function handleRegisterSubmit(e) {
     e.preventDefault()
     try {
       isSubmitDisabled = true
       setReady(false)
-      const { data } = await axios.post('/api/login', loginForm)
+      const { data } = await axios.post('/register', registerForm)
 
       setUser(data?.data)
-      setUserId(data.data?.id)
       setRedirect(true)
-      toast.success('Login berhasil!')
+      // axios.defaults.headers.common['Authorization'] = `Bearer ${data.data.token}`;
+      toast.success('Register successful!')
     } catch (error) {
-      setErrors(error.response.data.message)
-      toast.error(error.response.data.message)
+      toast.error('Register failed!')
     } finally {
       isSubmitDisabled = true
       setReady(true)
@@ -44,33 +43,29 @@ function RegisterForm() {
 
   function handleInputChange(e) {
     const { name, value } = e.target
-    setLoginForm({
-      ...loginForm,
+    setRegisterForm({
+      ...registerForm,
       [name]: value
     })
   }
 
-  let isSubmitDisabled = !(loginForm.email && loginForm.password)
+  let isSubmitDisabled = !(registerForm.username && registerForm.email && registerForm.password)
 
   if (redirect) {
-    if (user?.role === 'peserta') {
-      return <Navigate to={'/training'} />
-    } else {
-      return <Navigate to={'/admin/dashboard'} />
-    }
+      return <Navigate to={'/to-do'} />
   }
 
   return ready ? (
     <div className="grow flex items-center justify-around">
       <div className="mb-16">
         <div className="text-4xl mb-4 text-center">Register</div>
-        <form className="max-w-md mx-auto" onSubmit={handleLoginSubmit}>
+        <form className="max-w-md mx-auto" onSubmit={handleRegisterSubmit}>
           <input
             type="text"
             placeholder="Username"
             className="mb-2"
             name="username"
-            value={loginForm.username}
+            value={registerForm.username}
             onChange={handleInputChange}
           />
           <input
@@ -78,7 +73,7 @@ function RegisterForm() {
             placeholder="your@email.com"
             className="mb-2"
             name="email"
-            value={loginForm.email}
+            value={registerForm.email}
             onChange={handleInputChange}
           />
           <div className="flex relative items-center">
@@ -87,7 +82,7 @@ function RegisterForm() {
               placeholder="Password"
               className="mb-2"
               name="password"
-              value={loginForm.password}
+              value={registerForm.password}
               onChange={handleInputChange}
             />
             <div
@@ -133,7 +128,7 @@ function RegisterForm() {
             </div>
           </div>
           <button
-            className={`bg-primary w-full py-2 px-4 rounded-2xl text-white${
+            className={`bg-primary w-full py-2 px-4 rounded-md text-white${
               isSubmitDisabled ? ' bg-disabled' : ' bg-primary'
             }`}
           >
@@ -142,7 +137,7 @@ function RegisterForm() {
           <div className="text-center py-2 text-gray-500">
             {'Already a member? '}
             <Link to={'/login'} className="underline text-black">
-              Login
+              Register
             </Link>
           </div>
         </form>
